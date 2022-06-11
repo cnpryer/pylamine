@@ -20,22 +20,26 @@ help:
 venv:
 	@python -m venv venv
 	@$(ACTIVATE) poetry install \
-		&& pre-commit install
+		&& pre-commit install \
+		&& maturin develop
 
 clean:
 	-@rm -rf venv
 	-@rm -fr `find . -name __pycache__`
 	-@rm -rf .pytest_cache
 	-@rm -rf .mypy_cache
+	-@rm -rf target
 
 lint: venv
 	@$(ACTIVATE) poetry run flake8 \
-		pylamine \
+		python \
 		tests
+	@cargo clippy
 
 fmt: venv
 	@$(ACTIVATE) poetry run isort . \
 		&& poetry run black .
+	@cargo fmt
 
 fmt-check: venv
 	@$(ACTIVATE) poetry run isort . --check \
@@ -46,5 +50,5 @@ test: venv
 
 pre-commit: test fmt lint
 	@$(ACTIVATE) poetry run mypy \
-		pylamine \
+		python \
 		tests

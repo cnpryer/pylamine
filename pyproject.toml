@@ -4,6 +4,16 @@ version = "0.1.0"
 description = "Python bindings for Calamine."
 authors = ["Chris Pryer <cnpryer@gmail.com>"]
 license = "MIT"
+repository = "https://github.com/cnpryer/pylamine.git"
+readme = "./README.md"
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Rust",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+]
 
 [tool.poetry.dependencies]
 python = "^3.8"
@@ -16,7 +26,15 @@ maturin = "^0.12.19"
 pytest = "^7.1.2"
 mypy = "^0.961"
 pre-commit = "^2.19.0"
+polars = "^0.13.44"
+xlsx2csv = "^0.7.8"
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["maturin>=0.12"]
+build-backend = "maturin"
+
+[tool.black]
+line_lenght = 79
+
+[tool.mypy]
+ignore_missing_imports = "True"

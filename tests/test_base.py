@@ -6,8 +6,7 @@ from pylamine import get_sheet_data, get_sheet_names
 PATH = Path(__file__).parent / "data"
 
 
-def test_ods_read():
-    # calamine not supported ods date/datetime parse
+def test_ods_read() -> None:
     names = ["Sheet1", "Sheet2"]
     data = [["String", 1, 1.1, True, False]]
 
@@ -15,8 +14,7 @@ def test_ods_read():
     assert data == get_sheet_data((PATH / "base.ods").as_posix(), 0)
 
 
-def test_xls_read():
-    # calamine does not support xls datetime parse
+def test_xls_read() -> None:
     names = ["Sheet1", "Sheet2"]
     data = [["String", 1, 1.1, True, False]]
 
@@ -24,8 +22,7 @@ def test_xls_read():
     assert data == get_sheet_data((PATH / "base.xls").as_posix(), 0)
 
 
-def test_xlsx_read():
-    # calamine does not support xlsx datetime parse
+def test_xlsx_read() -> None:
     names = ["Sheet1", "Sheet2"]
     data = [["String", 1, 1.1, True, False, date(2020, 1, 1)]]
 

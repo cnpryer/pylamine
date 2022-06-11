@@ -1,3 +1,4 @@
+use calamine::DataType;
 use chrono::{Datelike, Timelike};
 use pyo3::prelude::*;
 use pyo3::types::{PyDate, PyDateTime, PyTime};

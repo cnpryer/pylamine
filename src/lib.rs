@@ -8,6 +8,8 @@ use pyo3::wrap_pyfunction;
 
 use utils::CellValue;
 
+const VERSION: &str = "0.1.1";
+
 create_exception!(python_calamine, CalamineError, PyException);
 
 fn _get_sheet_data(path: &str, sheet: usize) -> Result<Vec<Vec<CellValue>>, Error> {
@@ -74,5 +76,6 @@ fn pylamine(py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(get_sheet_data, m)?)?;
     m.add_function(wrap_pyfunction!(get_sheet_names, m)?)?;
     m.add("CalamineError", py.get_type::<CalamineError>())?;
+    m.add("__version__", VERSION)?;
     Ok(())
 }

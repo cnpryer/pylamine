@@ -1,5 +1,5 @@
-[![python tests](https://github.com/cnpryer/pylamine/workflows/python-tests/badge.svg)](https://github.com/cnpryer/pylamine/actions)
-[![rust tests](https://github.com/cnpryer/pylamine/workflows/rust-tests/badge.svg)](https://github.com/cnpryer/pylamine/actions)
+[![Python tests](https://github.com/cnpryer/pylamine/actions/workflows/python-tests.yaml/badge.svg)](https://github.com/cnpryer/pylamine/actions/workflows/python-tests.yaml)
+[![Rust tests](https://github.com/cnpryer/pylamine/actions/workflows/rust-tests.yaml/badge.svg)](https://github.com/cnpryer/pylamine/actions/workflows/rust-tests.yaml)
 [![latest release](https://img.shields.io/pypi/v/pylamine.svg)](https://pypi.org/project/pylamine/)
 
 # pylamine
@@ -12,4 +12,4 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## Credits
 
-Credits to [`python-calomine`](https://github.com/dimastbk/python-calamine) for getting this started with `get_sheet_data` and `get_sheet_names`! 👏
+Credits to [`python-calamine`](https://github.com/dimastbk/python-calamine) for getting this started with `get_sheet_data` and `get_sheet_names`! 👏

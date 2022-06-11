@@ -1,0 +1,27 @@
+name: Rust tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+    paths:
+      - 'src/**'
+      
+jobs:
+  rust:
+    name: Rust
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: --all-features # -- -D warnings
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: --no-run --lib

@@ -1,0 +1,25 @@
+[package]
+name = "pylamine"
+version = "0.0.1"
+authors = ["Chris <cnpryer@gmail.com>"]
+description = "Python bindings for Calamine."
+edition = "2018"
+homepage = "https://github.com/cnpryer/pylamine"
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/cnpryer/pylamine.git"
+
+[lib]
+name = "pylamine"
+crate-type = ["cdylib"]
+
+[dependencies]
+calamine = {version = "^0.18.0", features = ["dates"] }
+pyo3 = {version = "^0.16.5", features = ["extension-module"] }
+chrono = { version = "0.4.17", features = ["serde"] }
+
+[build-dependencies]
+pyo3-build-config =  "^0.16.5"
+
+[package.metadata.maturin]
+python-source = "python"

@@ -1,6 +1,6 @@
 [package]
-name = "pylamine_rs"
-version = "0.1.1"
+name = "pylamine"
+version = "0.1.2"
 authors = ["Chris <cnpryer@gmail.com>"]
 description = "Python bindings for Calamine."
 edition = "2018"

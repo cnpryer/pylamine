@@ -203,8 +203,8 @@ dependencies = [
 ]
 
 [[package]]
-name = "pylamine_rs"
-version = "0.1.1"
+name = "pylamine"
+version = "0.1.2"
 dependencies = [
  "calamine",
  "chrono",

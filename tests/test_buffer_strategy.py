@@ -1,20 +1,21 @@
 import csv
 from io import StringIO
-from pathlib import Path
+from typing import Dict, List
 
 import polars as pl
 
-import pylamine
+from pylamine import get_sheet_data, get_sheet_names
+from pylamine.type import CalamineCell
 
-PATH = Path(__file__).parent / "data"
+from . import DATA_DIR, DEFAULT_SHEET_INDEX
 
 
-def test_read_excel() -> None:
+def get_df(filepath: str) -> pl.DataFrame:
     # use StringIO buffer to build DataFrame
     buffer = StringIO()
 
     # parse rows from default sheet
-    rows = pylamine.get_sheet_data((PATH / "df.xlsx").as_posix(), 0)
+    rows = get_sheet_data(filepath, DEFAULT_SHEET_INDEX)
 
     writer = csv.writer(buffer, quoting=csv.QUOTE_ALL)
     for row in rows:
@@ -25,4 +26,16 @@ def test_read_excel() -> None:
 
     df = pl.read_csv(buffer)
 
+    return df
+
+
+def test_read_excel(
+    df_file_sheet_names: List[str], df_file_dict: Dict[str, List[CalamineCell]]
+) -> None:
+    filepath = (DATA_DIR / "df.xlsx").as_posix()
+    sheet_names = get_sheet_names(filepath)
+    assert sheet_names == df_file_sheet_names
+
+    df = get_df(filepath)
     assert not df.is_empty()
+    assert df.frame_equal(pl.DataFrame(df_file_dict))

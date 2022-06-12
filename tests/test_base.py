@@ -1,45 +1,28 @@
-from datetime import date
-from pathlib import Path
+from typing import List
 
 from pylamine import get_sheet_data, get_sheet_names, get_sheets
+from pylamine.type import CalamineRow
 
-PATH = Path(__file__).parent / "data"
-
-
-def test_ods_read() -> None:
-    names = ["Sheet1", "Sheet2"]
-    data = [["String", 1, 1.1, True, False]]
-    sheets = [
-        ("Sheet1", [["String", 1, 1.1, True, False]]),
-        ("Sheet2", []),
-    ]
-
-    assert names == get_sheet_names((PATH / "base.ods").as_posix())
-    assert data == get_sheet_data((PATH / "base.ods").as_posix(), 0)
-    assert sheets == get_sheets((PATH / "base.ods").as_posix())
+from . import DATA_DIR, DEFAULT_SHEET_INDEX
 
 
-def test_xls_read() -> None:
-    names = ["Sheet1", "Sheet2"]
-    data = [["String", 1, 1.1, True, False]]
-    sheets = [
-        ("Sheet1", [["String", 1, 1.1, True, False]]),
-        ("Sheet2", []),
-    ]
+def test_base_files(
+    base_file_sheet_names: List[str],
+    ods_rows: List[List[CalamineRow]],
+    xls_rows: List[List[CalamineRow]],
+    xlsx_rows: List[List[CalamineRow]],
+) -> None:
+    test_data = (
+        ("base.ods", ods_rows),
+        ("base.xls", xls_rows),
+        ("base.xlsx", xlsx_rows),
+    )
 
-    assert names == get_sheet_names((PATH / "base.xls").as_posix())
-    assert data == get_sheet_data((PATH / "base.xls").as_posix(), 0)
-    assert sheets == get_sheets((PATH / "base.xls").as_posix())
+    for (name, rows) in test_data:
+        filepath = (DATA_DIR / name).as_posix()
 
-
-def test_xlsx_read() -> None:
-    names = ["Sheet1", "Sheet2"]
-    data = [["String", 1, 1.1, True, False, date(2020, 1, 1)]]
-    sheets = [
-        ("Sheet1", [["String", 1, 1.1, True, False, date(2020, 1, 1)]]),
-        ("Sheet2", []),
-    ]
-
-    assert names == get_sheet_names((PATH / "base.xlsx").as_posix())
-    assert data == get_sheet_data((PATH / "base.xlsx").as_posix(), 0)
-    assert sheets == get_sheets((PATH / "base.xlsx").as_posix())
+        assert rows[DEFAULT_SHEET_INDEX] == get_sheet_data(
+            filepath, DEFAULT_SHEET_INDEX
+        )
+        assert base_file_sheet_names == get_sheet_names(filepath)
+        assert list(zip(base_file_sheet_names, rows)) == get_sheets(filepath)

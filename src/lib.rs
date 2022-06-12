@@ -1,17 +1,13 @@
 mod parse;
 mod utils;
-use std::fs::File;
-use std::io::BufReader;
 
-use calamine::{open_workbook_auto, DataType, Error, Reader, Sheets};
+use calamine::{open_workbook_auto, Error, Reader, Sheets};
 use pyo3::create_exception;
 use pyo3::exceptions::*;
 use pyo3::prelude::*;
 use pyo3::wrap_pyfunction;
 
 use utils::CellValue;
-
-const VERSION: &str = "0.1.1";
 
 create_exception!(python_calamine, CalamineError, PyException);
 
@@ -80,6 +76,5 @@ fn pylamine(py: Python, m: &PyModule) -> PyResult<()> {
     m.add_function(wrap_pyfunction!(get_sheet_names, m)?)?;
     m.add_function(wrap_pyfunction!(get_sheets, m)?)?;
     m.add("CalamineError", py.get_type::<CalamineError>())?;
-    m.add("__version__", VERSION)?;
     Ok(())
 }

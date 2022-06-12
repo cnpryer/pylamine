@@ -32,7 +32,7 @@ clean:
 
 lint: venv
 	@$(ACTIVATE) poetry run flake8 \
-		python \
+		pylamine \
 		tests
 	@cargo clippy
 
@@ -44,11 +44,12 @@ fmt: venv
 fmt-check: venv
 	@$(ACTIVATE) poetry run isort . --check \
 		&& poetry run black . --check
+	@cargo fmt --check
 
 test: venv
 	@$(ACTIVATE) poetry run pytest
 
 pre-commit: test fmt lint
 	@$(ACTIVATE) poetry run mypy \
-		python \
+		pylamine \
 		tests

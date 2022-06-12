@@ -53,13 +53,13 @@ jobs:
       - name: Run lint
         run: |
           poetry run flake8 \
-          python \
+          pylamine \
           tests
 
       - name: Run mypy
         run: |
           poetry run mypy \
-          python \
+          pylamine \
           tests
 
       - name: Run fmt check

@@ -32,7 +32,7 @@ clean:
 
 lint: venv
 	@$(ACTIVATE) poetry run flake8 \
-		python \
+		pylamine \
 		tests
 	@cargo clippy
 
@@ -50,5 +50,5 @@ test: venv
 
 pre-commit: test fmt lint
 	@$(ACTIVATE) poetry run mypy \
-		python \
+		pylamine \
 		tests

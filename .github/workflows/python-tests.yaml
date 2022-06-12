@@ -8,6 +8,7 @@ on:
     paths:
       - 'python/**'
       - 'tests/**'
+      - '.github/workflows/python-tests.yaml'
 
 jobs:
   tests:

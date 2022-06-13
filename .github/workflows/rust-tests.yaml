@@ -5,9 +5,14 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
+    # run this gha if...
     paths:
+      # changes to Rust code
       - 'src/**'
+      # changes to this gha
       - '.github/workflows/rust-tests.yaml'
+      # changes to the Rust dependencies/metadata/other project toml datas
+      - 'Cargo.toml'
       
 jobs:
   rust:

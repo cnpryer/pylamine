@@ -1,20 +1,61 @@
-from typing import List, Tuple
+from io import BytesIO
+from pathlib import Path
+from typing import BinaryIO, List, Tuple
 
+from pylamine.error import InvalidParameterError, UnimplmentedError
 from pylamine.pylamine import get_sheet_data as _get_sheet_data
+from pylamine.pylamine import (
+    get_sheet_data_with_name as _get_sheet_data_with_name,
+)
 from pylamine.pylamine import get_sheet_names as _get_sheet_names
 from pylamine.pylamine import get_sheets as _get_sheets
-from pylamine.type import CalamineRow
+from pylamine.type import CalamineRow, FileLike, SheetLike
+from pylamine.utils import format_path
 
 
-def get_sheet_data(path: str, sheet: int) -> List[CalamineRow]:
-    return _get_sheet_data(path, sheet)
+def get_sheet_data(file_like: FileLike, sheet: SheetLike) -> List[CalamineRow]:
+    # if given a path, format it
+    if isinstance(file_like, (str, Path)):
+        file_like = format_path(file_like)
+
+    elif isinstance(file_like, (BytesIO, BinaryIO, bytes)):
+        raise UnimplmentedError("File objects are not currently supported.")
+
+    else:
+        raise InvalidParameterError("FileLike value is not supported.")
+
+    # if given the name of the sheet, use _get_sheet_data_with_name
+    if isinstance(sheet, (str,)):
+        return _get_sheet_data_with_name(file_like, sheet)
+
+    return _get_sheet_data(file_like, sheet)
 
 
-def get_sheet_names(path: str) -> List[str]:
-    return _get_sheet_names(path)
+def get_sheet_names(file_like: FileLike) -> List[str]:
+    # if given a path, format it
+    if isinstance(file_like, (str, Path)):
+        file_like = format_path(file_like)
+
+    elif isinstance(file_like, (BytesIO, BinaryIO, bytes)):
+        raise UnimplmentedError("File objects are not currently supported.")
+
+    else:
+        raise InvalidParameterError("FileLike value is not supported.")
+
+    return _get_sheet_names(file_like)
 
 
 def get_sheets(
-    path: str,
+    file_like: FileLike,
 ) -> List[Tuple[str, List[CalamineRow]]]:
-    return _get_sheets(path)
+    # if given a path, format it
+    if isinstance(file_like, (str, Path)):
+        file_like = format_path(file_like)
+
+    elif isinstance(file_like, (BytesIO, BinaryIO, bytes)):
+        raise UnimplmentedError("File objects are not currently supported.")
+
+    else:
+        raise InvalidParameterError("FileLike value is not supported.")
+
+    return _get_sheets(file_like)

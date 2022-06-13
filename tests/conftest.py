@@ -8,7 +8,13 @@ from pylamine.type import CalamineRow
 # base files for ods and xls have the same row data, but
 # xlsx is read with dates. all files have the same sheet
 # names ("Sheet1", "Sheet2").
+#
+# book.worksheets() utilizes a hashmap, so order isn't
+# preserved.
+#
 # a df.xlsx was added for special use cases.
+# all base file fixture data must align in shape
+# for uniform testing
 
 
 @fixture
@@ -27,20 +33,30 @@ def df_file_dict() -> Dict[str, CalamineRow]:
 
 
 @fixture
-def base_file_sheet_names() -> List[str]:
+def ods_file_sheet_names() -> List[str]:
     return ["Sheet1", "Sheet2"]
 
 
 @fixture
-def ods_rows() -> List[List[CalamineRow]]:
+def xls_file_sheet_names() -> List[str]:
+    return ["Sheet1", "Sheet2"]
+
+
+@fixture
+def xlsx_file_sheet_names() -> List[str]:
+    return ["Sheet1", "Sheet2"]
+
+
+@fixture
+def ods_file_rows() -> List[List[CalamineRow]]:
     return [[["String", 1, 1.1, True, False]], []]
 
 
 @fixture
-def xls_rows() -> List[List[CalamineRow]]:
+def xls_file_rows() -> List[List[CalamineRow]]:
     return [[["String", 1, 1.1, True, False]], []]
 
 
 @fixture
-def xlsx_rows() -> List[List[CalamineRow]]:
+def xlsx_file_rows() -> List[List[CalamineRow]]:
     return [[["String", 1, 1.1, True, False, date(2020, 1, 1)]], []]

@@ -3,26 +3,70 @@ from typing import List
 from pylamine import get_sheet_data, get_sheet_names, get_sheets
 from pylamine.type import CalamineRow
 
-from . import DATA_DIR, DEFAULT_SHEET_INDEX
+from .utils import create_filepath
 
 
-def test_base_files(
-    base_file_sheet_names: List[str],
-    ods_rows: List[List[CalamineRow]],
-    xls_rows: List[List[CalamineRow]],
-    xlsx_rows: List[List[CalamineRow]],
+def test_get_sheet_data_ods(ods_file_rows: List[List[CalamineRow]]) -> None:
+    path, sheet = create_filepath("base.ods"), 0
+    rows = ods_file_rows[sheet]
+    assert rows == get_sheet_data(path, sheet=sheet)
+    assert rows == get_sheet_data(path, sheet="Sheet1")
+
+
+def test_get_sheet_data_xls(xls_file_rows: List[List[CalamineRow]]) -> None:
+    path, sheet = create_filepath("base.xls"), 0
+    rows = xls_file_rows[sheet]
+    assert rows == get_sheet_data(path, sheet=sheet)
+    assert rows == get_sheet_data(path, sheet="Sheet1")
+
+
+def test_get_sheet_data_xlsx(xlsx_file_rows: List[List[CalamineRow]]) -> None:
+    path, sheet = create_filepath("base.xlsx"), 0
+    rows = xlsx_file_rows[sheet]
+    assert rows == get_sheet_data(path, sheet=sheet)
+    assert rows == get_sheet_data(path, sheet="Sheet1")
+
+
+def test_get_sheet_names_ods(ods_file_sheet_names: List[str]) -> None:
+    path = create_filepath("base.ods")
+    assert ods_file_sheet_names == get_sheet_names(path)
+
+
+def test_get_sheet_names_xls(xls_file_sheet_names: List[str]) -> None:
+    path = create_filepath("base.xls")
+    assert xls_file_sheet_names == get_sheet_names(path)
+
+
+def test_get_sheet_names_xlsx(xlsx_file_sheet_names: List[str]) -> None:
+    path = create_filepath("base.xlsx")
+    assert xlsx_file_sheet_names == get_sheet_names(path)
+
+
+# NOTE: order is currently not preserved using get_sheets
+
+
+def test_get_sheets_ods(
+    ods_file_sheet_names: List[str], ods_file_rows: List[List[CalamineRow]]
 ) -> None:
-    test_data = (
-        ("base.ods", ods_rows),
-        ("base.xls", xls_rows),
-        ("base.xlsx", xlsx_rows),
-    )
+    path = create_filepath("base.ods")
+    expected = {s: d for (s, d) in zip(ods_file_sheet_names, ods_file_rows)}
+    res = {s: d for (s, d) in get_sheets(path)}
+    assert res == expected
 
-    for (name, rows) in test_data:
-        filepath = (DATA_DIR / name).as_posix()
 
-        assert rows[DEFAULT_SHEET_INDEX] == get_sheet_data(
-            filepath, DEFAULT_SHEET_INDEX
-        )
-        assert base_file_sheet_names == get_sheet_names(filepath)
-        assert list(zip(base_file_sheet_names, rows)) == get_sheets(filepath)
+def test_get_sheets_xls(
+    xls_file_sheet_names: List[str], xls_file_rows: List[List[CalamineRow]]
+) -> None:
+    path = create_filepath("base.xls")
+    expected = {s: d for (s, d) in zip(xls_file_sheet_names, xls_file_rows)}
+    res = {s: d for (s, d) in get_sheets(path)}
+    assert res == expected
+
+
+def test_get_sheets_xlsx(
+    xlsx_file_sheet_names: List[str], xlsx_file_rows: List[List[CalamineRow]]
+) -> None:
+    path = create_filepath("base.xlsx")
+    expected = {s: d for (s, d) in zip(xlsx_file_sheet_names, xlsx_file_rows)}
+    res = {s: d for (s, d) in get_sheets(path)}
+    assert res == expected

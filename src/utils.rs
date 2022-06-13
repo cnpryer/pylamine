@@ -2,7 +2,7 @@ use chrono::{Datelike, Timelike};
 use pyo3::prelude::*;
 use pyo3::types::{PyDate, PyDateTime, PyTime};
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub enum CellValue {
     Int(i64),
     Float(f64),

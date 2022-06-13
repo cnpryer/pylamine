@@ -1,7 +1,7 @@
 use crate::utils::CellValue;
 use calamine::{DataType, Range};
 
-pub fn parse_range(range: Range<DataType>) -> Vec<Vec<CellValue>> {
+pub fn parse_range(range: &Range<DataType>) -> Vec<Vec<CellValue>> {
     let mut res: Vec<Vec<CellValue>> = Vec::new();
     for row in range.rows() {
         let mut result_row: Vec<CellValue> = Vec::new();

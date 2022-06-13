@@ -5,10 +5,20 @@ on:
     branches: [master]
   pull_request:
     branches: [master]
+    # run this gha if...
     paths:
-      - 'python/**'
+      # anything in the pylamine Python namespace
+      - 'pylamine/**'
+      # any testing changes
       - 'tests/**'
+      # any changes to this gha
       - '.github/workflows/python-tests.yaml'
+      # any changes to the Python dependencies/metadata/other project toml data
+      - 'pyproject.toml'
+      # changes to Rust code needs to trigger tests for Python bindings
+      - 'src/**'
+      # changes to the Rust dependencies/metadata/other project toml datas
+      - 'Cargo.toml'
 
 jobs:
   tests:

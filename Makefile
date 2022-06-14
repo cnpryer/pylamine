@@ -1,5 +1,3 @@
-ACTIVATE = source venv/bin/activate &&
-
 .PHONY: help clean lint fmt mt-check test pre-commit
 
 help:
@@ -19,9 +17,10 @@ help:
 
 venv:
 	@python -m venv venv
-	@$(ACTIVATE) poetry install \
-		&& pre-commit install \
-		&& maturin develop
+
+	@poetry install \
+		&& poetry run pre-commit install \
+		&& poetry run maturin develop
 
 clean:
 	-@rm -rf venv
@@ -31,25 +30,25 @@ clean:
 	-@rm -rf target
 
 lint: venv
-	@$(ACTIVATE) poetry run flake8 \
+	@poetry run flake8 \
 		pylamine \
 		tests
 	@cargo clippy
 
 fmt: venv
-	@$(ACTIVATE) poetry run isort . \
+	@poetry run isort . \
 		&& poetry run black .
 	@cargo fmt
 
 fmt-check: venv
-	@$(ACTIVATE) poetry run isort . --check \
+	@poetry run isort . --check \
 		&& poetry run black . --check
 	@cargo fmt --check
 
 test: venv
-	@$(ACTIVATE) poetry run pytest
+	@poetry run pytest
 
 pre-commit: test fmt lint
-	@$(ACTIVATE) poetry run mypy \
+	@poetry run mypy \
 		pylamine \
 		tests

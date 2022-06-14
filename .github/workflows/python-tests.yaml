@@ -59,7 +59,7 @@ jobs:
       - name: Install library
         run: |
           poetry install --no-interaction
-          source .venv/bin/activate && maturin develop
+          poetry run maturin develop
 
       - name: Run lint
         run: |

@@ -1,4 +1,4 @@
-.PHONY: help clean lint fmt mt-check test pre-commit
+.PHONY: help clean lint fmt mt-check test pre-commit develop
 
 help:
 	@echo ""
@@ -6,9 +6,11 @@ help:
 	@echo ""
 	@echo "commands"
 	@echo "  venv				create venv and install dependencies"
+	@echo "  develop			post-venv maturin develop with poetry"
 	@echo "  clean				remove cleanable files"
 	@echo "  lint				run linters"
-	@echo "  fmt				run formaters"
+	@echo "  types				run mypy on Python code"
+	@echo "  fmt				run formatters"
 	@echo "  fmt-check			run formatting check"
 	@echo "  test				run all tests"
 	@echo "  pre-commit			run pre-commit standardization"
@@ -17,10 +19,11 @@ help:
 
 venv:
 	@python -m venv venv
+	@poetry install
+	@poetry run pre-commit install
 
-	@poetry install \
-		&& poetry run pre-commit install \
-		&& poetry run maturin develop
+develop: venv
+	@poetry run maturin develop
 
 clean:
 	-@rm -rf venv
@@ -35,20 +38,22 @@ lint: venv
 		tests
 	@cargo clippy
 
-fmt: venv
-	@poetry run isort . \
-		&& poetry run black .
-	@cargo fmt
-
-fmt-check: venv
-	@poetry run isort . --check \
-		&& poetry run black . --check
-	@cargo fmt --check
-
-test: venv
-	@poetry run pytest
-
-pre-commit: test fmt lint
+types: venv
 	@poetry run mypy \
 		pylamine \
 		tests
+
+fmt: venv
+	@poetry run isort .
+	@poetry run black .
+	@cargo fmt
+
+fmt-check: venv
+	@poetry run isort . --check
+	@poetry run black . --check
+	@cargo fmt --check
+
+test: venv develop
+	@poetry run pytest
+
+pre-commit: fmt-check lint types test

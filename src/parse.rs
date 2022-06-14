@@ -2,9 +2,9 @@ use crate::utils::CellValue;
 use calamine::{DataType, Range};
 
 pub fn parse_range(range: &Range<DataType>) -> Vec<Vec<CellValue>> {
-    let mut res: Vec<Vec<CellValue>> = Vec::new();
+    let mut res = Vec::new();
     for row in range.rows() {
-        let mut result_row: Vec<CellValue> = Vec::new();
+        let mut result_row = Vec::new();
         for value in row.iter() {
             match value {
                 DataType::Int(v) => result_row.push(CellValue::Int(*v)),

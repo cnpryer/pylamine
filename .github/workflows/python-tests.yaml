@@ -43,13 +43,14 @@ jobs:
           version: 1.1.13
           virtualenvs-create: true
           virtualenvs-in-project: true
+          virtualenvs-path: venv
           installer-parallel: true
 
       - name: Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v2
         with:
-          path: .venv
+          path: venv
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
@@ -59,22 +60,20 @@ jobs:
       - name: Install library
         run: |
           poetry install --no-interaction
-          poetry run maturin develop
+          make develop
 
       - name: Run lint
         run: |
-          poetry run flake8 \
-          pylamine \
-          tests
+          make lint
 
       - name: Run mypy
         run: |
-          poetry run mypy \
-          pylamine \
-          tests
+          make tests
 
       - name: Run fmt check
-        run: poetry run black . --check
+        run: |
+          make fmt-check
 
       - name: Run tests
-        run: poetry run pytest
+        run: |
+          poetry run pytest

@@ -8,13 +8,11 @@ from pylamine.type import CalamineRow
 # base files for ods and xls have the same row data, but
 # xlsx is read with dates. all files have the same sheet
 # names ("Sheet1", "Sheet2").
-#
 # book.worksheets() utilizes a hashmap, so order isn't
 # preserved.
-#
 # a df.xlsx was added for special use cases.
 # all base file fixture data must align in shape
-# for uniform testing
+# for uniform testing.
 
 
 @fixture

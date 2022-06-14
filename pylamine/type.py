@@ -3,7 +3,7 @@ from io import BytesIO
 from pathlib import Path
 from typing import BinaryIO, List, Union
 
-CalamineCell = int | float | str | bool | time | date | datetime
+CalamineCell = Union[int, float, str, bool, time, date, datetime]
 CalamineRow = List[CalamineCell]
 FileLike = Union[str, BytesIO, Path, BinaryIO, bytes]
 SheetLike = Union[str, int]

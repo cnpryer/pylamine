@@ -13,7 +13,7 @@ from pylamine.type import CalamineRow, FileLike, SheetLike
 from pylamine.utils import format_path
 
 
-def get_sheet_data(file_like: FileLike, sheet: SheetLike) -> List[CalamineRow]:
+def process_file_like(file_like: FileLike) -> FileLike:
     # if given a path, format it
     if isinstance(file_like, (str, Path)):
         file_like = format_path(file_like)
@@ -23,6 +23,12 @@ def get_sheet_data(file_like: FileLike, sheet: SheetLike) -> List[CalamineRow]:
 
     else:
         raise InvalidParameterError("FileLike value is not supported.")
+
+    return file_like
+
+
+def get_sheet_data(file_like: FileLike, sheet: SheetLike) -> List[CalamineRow]:
+    file_like = process_file_like(file_like)
 
     # if given the name of the sheet, use _get_sheet_data_with_name
     if isinstance(sheet, (str,)):
@@ -32,15 +38,7 @@ def get_sheet_data(file_like: FileLike, sheet: SheetLike) -> List[CalamineRow]:
 
 
 def get_sheet_names(file_like: FileLike) -> List[str]:
-    # if given a path, format it
-    if isinstance(file_like, (str, Path)):
-        file_like = format_path(file_like)
-
-    elif isinstance(file_like, (BytesIO, BinaryIO, bytes)):
-        raise UnimplmentedError("File objects are not currently supported.")
-
-    else:
-        raise InvalidParameterError("FileLike value is not supported.")
+    file_like = process_file_like(file_like)
 
     return _get_sheet_names(file_like)
 
@@ -48,14 +46,6 @@ def get_sheet_names(file_like: FileLike) -> List[str]:
 def get_sheets(
     file_like: FileLike,
 ) -> List[Tuple[str, List[CalamineRow]]]:
-    # if given a path, format it
-    if isinstance(file_like, (str, Path)):
-        file_like = format_path(file_like)
-
-    elif isinstance(file_like, (BytesIO, BinaryIO, bytes)):
-        raise UnimplmentedError("File objects are not currently supported.")
-
-    else:
-        raise InvalidParameterError("FileLike value is not supported.")
+    file_like = process_file_like(file_like)
 
     return _get_sheets(file_like)

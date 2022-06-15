@@ -1,6 +1,8 @@
 mod parse;
 mod utils;
 
+use std::collections::HashMap;
+
 use calamine::{open_workbook_auto, Error, Reader};
 use pyo3::create_exception;
 use pyo3::exceptions::*;
@@ -68,11 +70,21 @@ fn get_sheet_names(path: &str) -> PyResult<Vec<String>> {
 
 fn _get_sheets(path: &str) -> Result<Vec<(String, Vec<Vec<CellValue>>)>, Error> {
     let mut book = open_workbook_auto(path)?;
-    let sheets_vec = book.worksheets();
+
+    // use native worksheets method
+    let worksheets = book.worksheets();
+    let sheet_map: HashMap<_, _> = worksheets.into_iter().collect();
+
+    // sheet names are in order
+    let sheet_names = book.sheet_names().to_vec();
+
+    // create vec with calamine tuple structure using sheet names
     let mut res = Vec::new();
-    for (name, range) in sheets_vec.iter() {
-        let data = parse::parse_range(range);
-        res.push((name.clone(), data.to_vec()));
+    for name in sheet_names.iter() {
+        res.push((
+            name.clone(),
+            parse::parse_range(sheet_map.get(name).unwrap()),
+        ));
     }
 
     Ok(res)

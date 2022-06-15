@@ -42,15 +42,12 @@ def test_get_sheet_names_xlsx(xlsx_file_sheet_names: List[str]) -> None:
     assert xlsx_file_sheet_names == get_sheet_names(path)
 
 
-# NOTE: order is currently not preserved using get_sheets
-
-
 def test_get_sheets_ods(
     ods_file_sheet_names: List[str], ods_file_rows: List[List[CalamineRow]]
 ) -> None:
     path = create_filepath("base.ods")
-    expected = {s: d for (s, d) in zip(ods_file_sheet_names, ods_file_rows)}
-    res = {s: d for (s, d) in get_sheets(path)}
+    expected = list(zip(ods_file_sheet_names, ods_file_rows))
+    res = get_sheets(path)
     assert res == expected
 
 
@@ -58,8 +55,8 @@ def test_get_sheets_xls(
     xls_file_sheet_names: List[str], xls_file_rows: List[List[CalamineRow]]
 ) -> None:
     path = create_filepath("base.xls")
-    expected = {s: d for (s, d) in zip(xls_file_sheet_names, xls_file_rows)}
-    res = {s: d for (s, d) in get_sheets(path)}
+    expected = list(zip(xls_file_sheet_names, xls_file_rows))
+    res = get_sheets(path)
     assert res == expected
 
 
@@ -67,6 +64,6 @@ def test_get_sheets_xlsx(
     xlsx_file_sheet_names: List[str], xlsx_file_rows: List[List[CalamineRow]]
 ) -> None:
     path = create_filepath("base.xlsx")
-    expected = {s: d for (s, d) in zip(xlsx_file_sheet_names, xlsx_file_rows)}
-    res = {s: d for (s, d) in get_sheets(path)}
+    expected = list(zip(xlsx_file_sheet_names, xlsx_file_rows))
+    res = get_sheets(path)
     assert res == expected

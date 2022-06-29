@@ -14,7 +14,7 @@ name = "pylamine"
 crate-type = ["cdylib"]
 
 [dependencies]
-calamine = {version = "^0.18.0", features = ["dates"] }
+calamine = {git = "https://github.com/cnpryer/calamine", rev = "d1c50bcfab668c029e79635b1c4599c0cf64ae5d", features = ["dates"]}
 pyo3 = {version = "^0.16.5", features = ["extension-module"] }
 chrono = { version = "0.4.17", features = ["serde"] }
 

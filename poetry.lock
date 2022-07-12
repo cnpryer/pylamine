@@ -264,7 +264,7 @@ pandas = ["pyarrow (>=4.0)", "pandas"]
 
 [[package]]
 name = "pre-commit"
-version = "2.19.0"
+version = "2.20.0"
 description = "A framework for managing and maintaining multi-language pre-commit hooks."
 category = "dev"
 optional = false
@@ -403,7 +403,7 @@ python-versions = "*"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "0a826b3b2ca56d4da0b98d6488c8bec6b3768cd224b8eec557cb50123917d4cf"
+content-hash = "2f14e72c7d25795e8b4b7a39256fb464618c4ea37dabe0bf852e8054971a7cce"
 
 [metadata.files]
 atomicwrites = [
@@ -575,8 +575,8 @@ polars = [
     {file = "polars-0.13.49.tar.gz", hash = "sha256:8c40f08077ef0619eca7c775918209408fa86606f105ecab999ce0314ccc3d21"},
 ]
 pre-commit = [
-    {file = "pre_commit-2.19.0-py2.py3-none-any.whl", hash = "sha256:10c62741aa5704faea2ad69cb550ca78082efe5697d6f04e5710c3c229afdd10"},
-    {file = "pre_commit-2.19.0.tar.gz", hash = "sha256:4233a1e38621c87d9dda9808c6606d7e7ba0e087cd56d3fe03202a01d2919615"},
+    {file = "pre_commit-2.20.0-py2.py3-none-any.whl", hash = "sha256:51a5ba7c480ae8072ecdb6933df22d2f812dc897d5fe848778116129a681aac7"},
+    {file = "pre_commit-2.20.0.tar.gz", hash = "sha256:a978dac7bc9ec0bcee55c18a277d553b0f419d259dadb4b9418ff2d00eb43959"},
 ]
 py = [
     {file = "py-1.11.0-py2.py3-none-any.whl", hash = "sha256:607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378"},

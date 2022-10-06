@@ -26,7 +26,7 @@ maturin = "^0.12.20"
 pytest = "^7.1.2"
 mypy = "^0.961"
 pre-commit = "^2.19.0"
-polars = "^0.13.49"
+polars = "^0.14.18"
 xlsx2csv = "^0.7.8"
 
 [build-system]
